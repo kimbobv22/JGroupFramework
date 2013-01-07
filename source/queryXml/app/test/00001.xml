@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queryset>
+	<query keyName="testUpdate">
+UPDATE TEST_TABLE
+SET  COL1 = '1'
+    ,COL2 = 'SDF'
+    ,COL3 = 11
+    ,COL4 = 0.3
+WHERE 1=1
+<isnotnull columnName="COL1">
+AND   COL1 = '2'
+</isnotnull>		
+<isequals columnName="COL2" columnValue="3233">
+AND   COL2 IS NOT NULL
+</isequals>
+
+<isnotnull columnName="COL1" isReverse="true">
+AND   COL1 = '##col1##'
+</isnotnull>
+<isequals columnName="COL2" columnValue="testsdfsfd" isReverse="true">
+AND   COL2 IS NOT NULL
+</isequals>
+AND   COL4 = ##col4##
+AND   COL4 = ##col5##
+AND   COL4 = ##col4##
+AND   COL4 = ##col3##
+AND   COL4 = ##col3##
+
+	</query>
+</queryset>

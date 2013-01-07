@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<project name="JGroup build" basedir="." default="deploy">
+	<property file="./common.properties" />
+	
+	<property name="buildFullPathFrom"	value="${build.pathFrom}${common.contextName}/" />
+	<property name="buildFullPathTo"	value="${build.pathTo}${common.contextName}/" />
+	
+	<property name="webContentPathFrom"	value="${buildFullPathFrom}WebContent/" />
+	<property name="webContentPathTo"	value="${buildFullPathTo}WebContent/" />
+	
+	<property name="libPathFrom"	value="${webContentPathFrom}WEB-INF/lib/" />
+	<property name="libPathTo"	value="${buildFullPathTo}WEB-INF/lib/" />
+	
+	<property name="classPathFrom"	value="${buildFullPathFrom}source/src/" />
+	<property name="classPathTo"	value="${buildFullPathTo}WEB-INF/classes/" />
+	
+	<property name="XMLQueryPathFrom"	value="${buildFullPathFrom}source/${db.XMLQueryFilePath}" />
+	<property name="XMLQueryPathTo"	value="${buildFullPathTo}WEB-INF/classes/${db.XMLQueryFilePath}" />
+	
+	<property name="docPathFrom"	value="${webContentPathFrom}doc/" />
+	<property name="docPathTo"	value="${webContentPathTo}doc/" />
+
+	<path id="classpath">
+		<fileset dir="${libPathFrom}" includes="*.jar" />
+		<pathelement path="${libPathTo}" />
+	</path>
+	
+	<target name="compile" description="Compile main source tree java files">
+		<mkdir dir="${classPathTo}" />
+		
+		<javac destdir="${classPathTo}"  
+				debug="true" fork="true" memoryInitialSize="128m" memoryMaximumSize="1024m" includeantruntime="true">
+			<src path="${classPathFrom}" />
+			<classpath refid="classpath" />
+		</javac> 
+	</target>
+
+	<target name="deploy" depends="clean,compile" description="deploy application">
+		<mkdir dir="${buildFullPathTo}WEB-INF/"/>
+		<mkdir dir="${libPathTo}"/>
+		<mkdir dir="${XMLQueryPathTo}"/>
+		<mkdir dir="${docPathTo}"/>
+		
+		<copy todir="${libPathTo}" description="copy library files">
+				<fileset dir="${libPathFrom}" />
+		</copy>
+		
+		<copy todir="${XMLQueryPathTo}" description="copy library files">
+				<fileset dir="${XMLQueryPathFrom}" />
+		</copy>
+		
+		<copy todir="${docPathTo}" description="copy document files">
+				<fileset dir="${docPathFrom}" />
+		</copy>
+		
+		<copy todir="${buildFullPathTo}WEB-INF/" description="copy configuration files1">
+			<fileset dir="${webContentPathFrom}WEB-INF/" excludes="**/*.properties,build.xml"/>
+		</copy>
+		
+		<copy todir="${buildFullPathTo}WEB-INF/classes" description="copy configuration files2">
+			<fileset dir="${webContentPathFrom}WEB-INF/" includes="**/*.properties"/>
+		</copy>
+		
+	</target>
+ 
+	<target name="clean" description="clean application">
+		<delete dir="${buildFullPathTo}WEB-INF/" description="clean WEB-INF"/>
+		<delete dir="${docPathTo}" description="clean document files"/>
+	</target>
+</project>
