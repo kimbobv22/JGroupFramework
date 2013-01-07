@@ -114,7 +114,6 @@ public class JGDBXMLQuery{
 			String conditionName_ = conditionElement_.getName();
 			String conditionStatement_ = "";
 			
-			System.out.println(conditionName_);
 			if(conditionName_.equalsIgnoreCase(JGDBXMLQuerySet.JGDBXML_CONDITION_ISNOTNULL)){
 				conditionStatement_ = _getConditionStatementAsISNOTNULL(conditionElement_, dataSet_, rowIndex_);
 			}else if(conditionName_.equalsIgnoreCase(JGDBXMLQuerySet.JGDBXML_CONDITION_ISEQUALS)){
