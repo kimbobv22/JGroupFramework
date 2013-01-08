@@ -54,9 +54,5 @@ public class T00010001 extends JGAction {
 		//getDBConnection().executeQuery("SELECT * FROM TABS");
 		JGDBXMLQuery queryItem_ = JGDBXMLQueryManager.sharedManager().getQuery("app/test/00001","testUpdate");
 		JGDBQuery query_ = queryItem_.createQuery(testDataset_);
-		
-
-		System.out.println(JGEncryptionUtil.encodeString("testAction","pixooter46674667"));
-		System.out.println(JGEncryptionUtil.encodeString("testAction"));
 	}
 }
